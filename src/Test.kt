@@ -43,8 +43,8 @@ fun main (args: Array<String>) {
 
 // 2nd Operators
     println("----------2nd Operators----------")
-    val num1: Int = 1
-    val num2: Int = 2
+    val num1 = 1
+    val num2 = 2
     val sum= num1 + num2
     println("The sum of numbers $num1 and $num2 is $sum") // no need for bracket
 
@@ -57,6 +57,13 @@ fun main (args: Array<String>) {
         result = num1
     else
         result = 0
+
+    // Above Code can be rewritten like this. This is better!
+//    result = when {
+//        num2 > num1 -> num2
+//        num2 < num1 -> num1
+//        else -> 0
+//    }
     println("The larger number is : $result")
 
     // in Kotlin we can write this! We can use if-else statements as an expression that returns a value. So cool!
@@ -71,8 +78,8 @@ fun main (args: Array<String>) {
 
 // 4th String Comparison
     println("----------4th String Comparison----------")
-    val str1: String = "Adonai"
-    val str2: String = "adonai"
+    val str1 = "Adonai"
+    val str2 = "adonai"
     if (str1 == str2)
         println("Same")
     else
@@ -207,13 +214,13 @@ fun main (args: Array<String>) {
 
 //10th String to Integer (try catch) 20 June 2017
     println("----------10th String to Integer---------")
-    val str3: String = "69"
+    val str3 = "69"
     var num4: Int = str3.toInt() //Converting string to integer in Kotlin
     num4++
     println(num4)
 
 
-    val str4: String = "69e"
+    val str4 = "69e"
     var num5: Int
     try                                // if string is a valid integer, it will print this
     {
@@ -229,7 +236,7 @@ fun main (args: Array<String>) {
     }
 
     // Try and catch can also be used as an expression that returns a value
-    val str5: String = "12e3"
+    val str5 = "12e3"
     var num6: Int = try {
         str5.toInt()
     }
@@ -289,6 +296,8 @@ fun main (args: Array<String>) {
 
     val adonai = human(22,"Adonai")
     adonai.think()
+    val jadonai = human("adad")
+    jadonai.think()
 
 //14th Inheritance (added by Hussein)
     println("----------14th Inheritance----------")
@@ -418,7 +427,7 @@ fun main (args: Array<String>) {
 
 //24th List of objects
     println("----------24th List of objects----------")
-    val list = listOf<ListClass>(ListClass("Ado",22),
+    val list = listOf(ListClass("Ado",22),
             ListClass("Awing",18))
 
     for (i in list){
@@ -579,6 +588,11 @@ fun findmax (a : Int, b : Int) : Int  //This function find the maximum between t
         return a
     else
         return b
+    //Can be written like this
+//    return if (a>b)
+//        a
+//    else
+//        b
 }
 
 fun findmax2 (a : Int, b : Int)  = if (a>b) a else b // Can be written in one line in Kotlin!Damn Kotlin!
@@ -618,11 +632,13 @@ fun fact(num8:BigInteger): BigInteger {
 //13th Constructor
 class human (n : String ="")  //This is primary constructor
 {
-    var name : String = n
-    var age = 0
-    constructor(age : Int, name: String) :this(name)
+    private var name : String = n   // can be initialized like this
+    private var age = 0
+
+    constructor(age : Int, name: String) :this(name) //Secondary Constructor? that also takes primary constructor parameter?
     {
         this.age =age
+        this.name = name
     }
     fun think()
     {
@@ -817,8 +833,8 @@ data class ListClass (var name: String?= null,
 
 class Car(){
 
-    var Type: String? = null
-    var Owner: String?=null
+    private var Type: String? = null
+    private var Owner: String?=null
     var anything: String? = null
     constructor(initType:String, initOwner:String):this(){ // This means run the constructor Car(), but in this case its empty
         println("type: $Type")
