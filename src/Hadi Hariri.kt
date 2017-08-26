@@ -54,9 +54,36 @@ fun main (args: Array<String>) {
 
 //Higher order function
 
+    println("----------HADI HARIRI Higher order function----------")
 
 
-    println(operation(3,5,::addTwoNumber))
+    println(operation(5,5,::addTwoNumber))
+
+    //a lambda
+    val sumLambda : (Int,Int) -> Int = { firstNumber, secondNumber -> firstNumber + secondNumber }
+
+    //inserting a lambda
+    println(operation(10,10, sumLambda))
+
+    // This code.....
+    println(  unaryOperation(3, {x -> x * x})  )
+    // ... can also be written as
+    println(  unaryOperation(3, { it*it})  ) // 'it' only works for single parameter function
+    //also like this..
+    println(  unaryOperation(3) { it*it}  ) //If the last or the only parameter of the function
+                                                // is a higher order function, no need bracket
+    unaryOp {    //can be like this
+        it*it
+    }
+
+    //Sample code
+    val db = Database()
+    transaction (db) {      //If the last or the only parameter of the function is a higher order function, no need bracket
+        //write code here
+    }
+
+    //Anonymous function - a function with no name. Or inline function
+    unaryOperation(3 , fun (x:Int) : Int {return x*x })
 
 
 }
@@ -110,9 +137,33 @@ object Copyright{     //Singletons are somehow   mconstants
     val author = "Tan Weiwei"
 }
 
-//Higher order function
+//Higher order functions and Lambdas
 
-fun operation (x: Int, y: Int, op: (Int, Int) -> Int) : Int = op(x,y)
+fun operation (x: Int, y: Int, op: (Int, Int) -> Int) : Int {
+    return op(x,y)
+}
+
+fun addTwoNumber (a: Int, b:Int) = a + b
+
+fun unaryOperation (x: Int, op: (Int) -> Int) : Int{
+    return op(x)
+}
+
+fun unaryOp (op: (Int) -> Int):Int{
+return op(3)
+}
+
+//Sample code
+class Database{
+    fun commit(){
+    }
+}
+fun transaction (db: Database, code : () -> Unit){
+    try{
+        code()
+    } finally{
+        db.commit()
+    }
+}
 
 
-fun addTwoNumber (a: Int, b:Int) = a+b
